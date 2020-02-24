@@ -38,9 +38,25 @@ export default {
     },
     methods: {
         loginForm() {
+            console.log('发送登录请求');
+            this.$axios({
+                url: '/login',
+                method: 'post',
+                data: this.ruleForm
+            }).then(res=>{
+                console.log(res.data);
+                const { message, data} = res.data
+                if (message == '登录成功') {
+                    localStorage.setItem('token',data.token);
+                    localStorage.setItem('userId',data.user.id)
+                }
+            })
 
         },
         resetForm() {
+            this.ruleForm.username = '' ;
+            this.ruleForm.password = ''
+            
 
         }
     },
