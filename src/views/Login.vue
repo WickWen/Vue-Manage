@@ -38,6 +38,13 @@ export default {
     },
     methods: {
         loginForm() {
+            if (!this.ruleForm.username || !this.ruleForm.password) {
+                this.$message({
+                    message:'请输入合法信息',
+                    type:'error'
+                })
+                return;
+            }
             console.log('发送登录请求');
             this.$axios({
                 url: '/login',
@@ -49,6 +56,15 @@ export default {
                 if (message == '登录成功') {
                     localStorage.setItem('token',data.token);
                     localStorage.setItem('userId',data.user.id)
+                    this.$message({
+                        message: '登录成功',
+                        type: 'success'
+                     });
+                }else{
+                    this.$message({
+                        message: message,
+                        type: 'error'
+                     });
                 }
             })
 
