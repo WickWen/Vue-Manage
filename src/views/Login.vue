@@ -55,7 +55,8 @@ export default {
                 const { message, data} = res.data
                 if (message == '登录成功') {
                     localStorage.setItem('token',data.token);
-                    localStorage.setItem('userId',data.user.id)
+                    // user 数据是对象 ,转成字符串
+                    localStorage.setItem('user',JSON.stringify(data.user))
                     this.$message({
                         message: '登录成功',
                         type: 'success'
