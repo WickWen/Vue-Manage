@@ -17,19 +17,21 @@
       text-color="#fff"
       active-text-color="#1890ff">
       
-      <el-menu-item index="1">
+      <el-menu-item index="1" @click="$router.push('/articlelist')">
         <i class="el-icon-menu"></i>
         <span slot="title">文章列表</span>
       </el-menu-item>
 
-      <el-menu-item index="2">
+      <el-menu-item index="2" @click="$router.push('/editpage')">
         <i class="el-icon-document-copy"></i>
         <span slot="title">发布文章</span>
       </el-menu-item>
     </el-menu>
       </el-aside>
 
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
     
   </el-container>
