@@ -35,7 +35,12 @@
     <el-table-column
       align="right">
 
-      <template slot="header" slot-scope="scope">
+      <template v-slot:header>
+        <!-- 在 <template> 上使用特殊的 slot-scope attribute，可以接收传递给插槽的 prop
+        自 2.6.0 起有所更新。已废弃的使用 slot-scope 和 slot 新语法指令为v-slot
+        也有缩写   v-slot:header 可以被重写为 #header
+        注意 作用域插槽 如果没有在{{}} 放置数据 会报 警告
+        'scope' is defined but never used. -->
         <el-input
           v-model="search"
           size="medium"
