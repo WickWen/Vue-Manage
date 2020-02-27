@@ -13,14 +13,17 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: '首页',
     children: [
       {
         // 配置嵌入到主页的组件,子路由 path 不用加/
         path: 'articlelist',
+        meta:'文章列表',
         component: ArticleList
       },
       {
         path: 'editpage',
+        meta: '发布文章',
         component: EditPage
       }
     ]
