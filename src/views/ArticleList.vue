@@ -13,7 +13,8 @@
 
   <el-table
     :data="tableData.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
-    style="width: 100%" class="list">
+    style="width: 100%" class="list"
+    v-loading="loading">
 
     <el-table-column
       label="ID"
@@ -87,6 +88,7 @@
         pageIndex: 1,
         pageSize: 10,
         total:0,
+        loading:true
       }
     },
     mounted() {
@@ -105,6 +107,7 @@
 
       // 获取列表数据方法封装
       loadlist(){
+        this.loading = true;
         this.$axios({
         url: '/post',
         params:{
@@ -116,9 +119,10 @@
         console.log(data)
         this.tableData = data;
         this.total = total;  /* 文章列表借口显示total总数 */
+        this.loading = false
       })
       },
-
+      
       handleEdit(index, row) {
         console.log(index, row);
       },
