@@ -12,17 +12,19 @@
     <el-container>
       <el-aside width="240px">
         <el-menu
-          default-active="1"
+          :router='true'
+          :default-active="$route.path"
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#1890ff"
         >
-          <el-menu-item index="1" @click="$router.push('/articlelist')">
+        <!-- 注意，如果绑定的是布尔值，那么就需要在属性前添加 v-bind:才能生效，否则会当成字符串处理。 -->
+          <el-menu-item index="/articlelist" >
             <i class="el-icon-menu"></i>
             <span slot="title">文章列表</span>
           </el-menu-item>
 
-          <el-menu-item index="2" @click="$router.push('/editpage')">
+          <el-menu-item index="/editpage" >
             <i class="el-icon-document-copy"></i>
             <span slot="title">发布文章</span>
           </el-menu-item>
