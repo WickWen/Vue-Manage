@@ -1,4 +1,16 @@
 <template>
+<div>
+  <el-pagination
+    background
+    layout="total, sizes,prev, pager, next,jumper"
+    :total="total"
+    :page-size='pageSize'
+    :page-sizes="[10, 20, 30, 50]"
+    @size-change="handleSizeChange"
+    @current-change="handleCurrentChange">
+  </el-pagination>
+  <br>
+
   <el-table
     :data="tableData.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
     style="width: 100%" class="list">
@@ -59,27 +71,54 @@
       </template>
     </el-table-column>
 
-  </el-table>
+  </el-table>  
+  
+
+</div>
+
 </template>
 
 <script>
   export default {
-    mounted() {
-      this.$axios({
-        url: '/post'
-      }).then(res=>{
-        const {data} = res.data;
-        console.log(data)
-        this.tableData = data;
-      })
-    },
     data() {
       return {
         tableData: [],
-        search: ''
+        search: '',
+        pageIndex: 1,
+        pageSize: 10,
+        total:0,
       }
     },
-    methods: {
+    mounted() {
+      this.loadlist();
+    },
+    methods:{
+      handleCurrentChange(newPageIndex){  /* 接收一个参数,就是当前页面的页码 */
+        this.pageIndex = newPageIndex
+        this.loadlist();
+      },
+      handleSizeChange(newPageSize){
+        this.pageSize = newPageSize
+        this.loadlist();
+      },
+      // 监听 size-change 事件，接收最新每页条数，触发函数修改当前 pageSize 然后发送请求
+
+      // 获取列表数据方法封装
+      loadlist(){
+        this.$axios({
+        url: '/post',
+        params:{
+          pageIndex:this.pageIndex,
+          pageSize:this.pageSize
+        }
+      }).then(res=>{
+        const {data,total} = res.data;
+        console.log(data)
+        this.tableData = data;
+        this.total = total;  /* 文章列表借口显示total总数 */
+      })
+      },
+
       handleEdit(index, row) {
         console.log(index, row);
       },
@@ -87,6 +126,7 @@
         console.log(index, row);
       }
     }
+
   }
 </script>
 
