@@ -1,5 +1,10 @@
 <template>
   <div>
+    <vue-editor 
+      v-model="content"
+    ></vue-editor>
+    <br>
+    
     <el-upload
       :action="$axios.defaults.baseURL + '/upload'" 
       :headers="{Authorization:token}"
@@ -20,9 +25,14 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
 export default {
+  components: {
+    VueEditor
+  },
   data() {
     return {
+      content:'',
       token: localStorage.getItem('token'),
       dialogImageUrl: '',
       dialogVisible: false
